@@ -26,7 +26,7 @@ class Ui_mainWindow(object):
         self.menu_layout.addWidget(self.run_button, 1, 1, 1, 1)
         self.folder_widget = QtWidgets.QTreeWidget(self.gridLayoutWidget_2)
         self.folder_widget.setObjectName("folder_widget")
-        self.folder_widget.headerItem().setText(0, "1")
+        self.folder_widget.headerItem().setText(0, "Path")
         self.menu_layout.addWidget(self.folder_widget, 0, 1, 1, 1)
         self.plot_view = QtWidgets.QWidget(self.centralwidget)
         self.plot_view.setGeometry(QtCore.QRect(20, 20, 711, 331))
