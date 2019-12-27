@@ -37,7 +37,7 @@ if __name__ == "__main__":
     myapp = Ui_mainWindow()
     myapp.setupUi(window)
 
-    dir_path = os.path.split(os.path.abspath(os.path.dirname(os.path.realpath(__file__))))[0]
+    dir_path = os.path.split(os.path.expanduser("~/~user"))[0]
     load_project_structure(dir_path, myapp.folder_widget)	        
     myapp.folder_widget.itemClicked.connect(onItemClicked)	
 
