@@ -12,11 +12,11 @@ import sys
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
         mainWindow.setObjectName("mainWindow")
-        mainWindow.resize(973, 397)
+        mainWindow.resize(1200, 400)
         self.centralwidget = QtWidgets.QWidget(mainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
-        self.gridLayoutWidget_2.setGeometry(QtCore.QRect(760, 20, 191, 331))
+        self.gridLayoutWidget_2.setGeometry(QtCore.QRect(760, 20, 420, 330))
         self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
         self.menu_layout = QtWidgets.QGridLayout(self.gridLayoutWidget_2)
         self.menu_layout.setContentsMargins(0, 0, 0, 0)
@@ -24,10 +24,17 @@ class Ui_mainWindow(object):
         self.run_button = QtWidgets.QPushButton(self.gridLayoutWidget_2)
         self.run_button.setObjectName("run_button")
         self.menu_layout.addWidget(self.run_button, 1, 1, 1, 1)
-        self.folder_widget = QtWidgets.QTreeWidget(self.gridLayoutWidget_2)
+
+        self.file_model = QtWidgets.QFileSystemModel()
+        self.file_model.setRootPath("~home")
+        self.folder_widget = QtWidgets.QTreeView(self.gridLayoutWidget_2)
         self.folder_widget.setObjectName("folder_widget")
-        self.folder_widget.headerItem().setText(0, "Path")
+        self.folder_widget.setModel(self.file_model)
+        self.folder_widget.hideColumn(1)
+        self.folder_widget.hideColumn(2)
+        self.folder_widget.hideColumn(3)
         self.menu_layout.addWidget(self.folder_widget, 0, 1, 1, 1)
+
         self.plot_view = QtWidgets.QWidget(self.centralwidget)
         self.plot_view.setGeometry(QtCore.QRect(20, 20, 711, 331))
         self.plot_view.setObjectName("plot_view")

@@ -6,8 +6,6 @@ from mainView import Ui_mainWindow
 def load_project_structure(startpath, tree):
   
     from PyQt5.QtWidgets import QTreeWidgetItem	    
-    from PyQt5.QtWidgets import QTreeWidgetItem
-    from PyQt5.QtGui import QIcon
     from PyQt5.QtGui import QIcon
     
     for element in os.listdir(startpath):
@@ -37,9 +35,10 @@ if __name__ == "__main__":
     myapp = Ui_mainWindow()
     myapp.setupUi(window)
 
-    dir_path = os.path.split(os.path.expanduser("~/~user"))[0]
-    load_project_structure(dir_path, myapp.folder_widget)	        
-    myapp.folder_widget.itemClicked.connect(onItemClicked)	
+
+#    dir_path = os.path.split(os.path.expanduser("~/~user"))[0]
+#    load_project_structure(dir_path, myapp.folder_widget)	        
+#    myapp.folder_widget.itemClicked.connect(onItemClicked)	
 
     window.show()
     sys.exit(app.exec_())
