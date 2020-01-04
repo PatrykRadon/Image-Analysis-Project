@@ -16,6 +16,8 @@ def load_project_structure(startpath, tree):
             parent_itm.setIcon(0, QIcon('folder.png')) 
         else:
               parent_itm.setIcon(0, QIcon('file.png'))
+
+
 def getItemFullPath(item):
     out = item.text(0)
 
@@ -23,7 +25,8 @@ def getItemFullPath(item):
         out = getItemFullPath(item.parent()) + "/" + out
     else:
         out =  "../content/" + out
-    return out;
+    return out
+
 
 def onItemClicked(it, col):
     print(it, col, it.text(col))	    # print(it, col, it.text(col))
