@@ -21,7 +21,8 @@ class Ui_mainWindow(object):
         self.graphic_view_size = [-80, -60, 920, 460]
         self.folder_widget_size = [820, 20, 400, 360]
         self.window_size = [0, 0, 1240, 420]
-
+        self.pix_map = QtGui.QPixmap()
+        self.pix_map_scaled = QtGui.QPixmap()
 
     def setupUi(self, mainWindow):
 
@@ -37,7 +38,6 @@ class Ui_mainWindow(object):
         self.central_widget.setObjectName("central_widget")
 
         self.file_widget = QtWidgets.QWidget(self.central_widget)
-        self.file_widget.setGeometry(QtCore.QRect(*self.folder_widget_size))
         self.file_widget.setObjectName("file_widget")
 
         self.menu_layout = QtWidgets.QGridLayout(self.file_widget)
@@ -60,16 +60,13 @@ class Ui_mainWindow(object):
         self.menu_layout.addWidget(self.folder_view, 0, 1, 1, 1)
 
         self.plot_widget = QtWidgets.QWidget(self.central_widget)
-        self.plot_widget.setGeometry(QtCore.QRect(*self.plot_view_size))
         self.plot_widget.setObjectName("plot_widget")
 
         self.graphics_view = QtWidgets.QLabel(self.plot_widget)
-        self.graphics_view.setGeometry(QtCore.QRect(*self.graphic_view_size))
         self.graphics_view.setObjectName("graphics_view")
 
         mainWindow.setCentralWidget(self.central_widget)
         self.menu_bar = QtWidgets.QMenuBar(mainWindow)
-        self.menu_bar.setGeometry(QtCore.QRect(0, 0, 973, 22))
         self.menu_bar.setObjectName("menu_bar")
         mainWindow.setMenuBar(self.menu_bar)
 
@@ -79,6 +76,37 @@ class Ui_mainWindow(object):
 
         self.retranslateUi(mainWindow)
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
+        self.resize()
+
+    def resize(self, size=None):
+        m_size = [0, 0]
+        if not size:
+            self.file_widget.setGeometry(QtCore.QRect(*self.folder_widget_size))
+            self.plot_widget.setGeometry(QtCore.QRect(*self.plot_view_size))
+            self.graphics_view.setGeometry(QtCore.QRect(*self.graphic_view_size))
+            self.menu_bar.setGeometry(QtCore.QRect(0, 0, 1, 22))
+            self.pix_map_scaled = self.pix_map.scaled(self.graphic_view_size[2], self.graphic_view_size[3],
+                                                      QtCore.Qt.KeepAspectRatio)
+            self.graphics_view.setPixmap(self.pix_map_scaled)
+        else:
+            if size.width() > size.height() * 1240 / 440:
+                m_size[0] = size.height() * 1240 / 440
+                m_size[1] = size.height()
+            else:
+                m_size[0] = size.width()
+                m_size[1] = size.width() * 440 / 1240
+
+            self.plot_view_size = [20, 20, 2 / 3 * m_size[0] - 20, m_size[1] - 60]
+            self.graphic_view_size = [-80, -20, m_size[0] * 2 / 3 + 140, m_size[1] * 2 / 3 + 80]
+            self.folder_widget_size = [2 / 3 * m_size[0] + 20, 20, 1 / 3 * m_size[0] - 40, m_size[1] - 60]
+
+            self.file_widget.setGeometry(QtCore.QRect(*self.folder_widget_size))
+            self.plot_widget.setGeometry(QtCore.QRect(*self.plot_view_size))
+            self.graphics_view.setGeometry(QtCore.QRect(*self.graphic_view_size))
+            self.menu_bar.setGeometry(QtCore.QRect(0, 0, 1, 22))
+            self.pix_map_scaled = self.pix_map.scaled(self.graphic_view_size[2], self.graphic_view_size[3],
+                                                      QtCore.Qt.KeepAspectRatio)
+            self.graphics_view.setPixmap(self.pix_map_scaled)
 
     def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -88,8 +116,9 @@ class Ui_mainWindow(object):
         if self.file_model.type(index) in self.types:
             self.path = self.file_model.filePath(index)
             self.pix_map = QtGui.QPixmap.fromImage(load_file(self.path))
-            self.pix_map = self.pix_map.scaled(self.graphic_view_size[2],self.graphic_view_size[3], QtCore.Qt.KeepAspectRatio)
-            self.graphics_view.setPixmap(self.pix_map)
+            self.pix_map_scaled = self.pix_map.scaled(self.graphic_view_size[2], self.graphic_view_size[3],
+                                                      QtCore.Qt.KeepAspectRatio)
+            self.graphics_view.setPixmap(self.pix_map_scaled)
         elif self.file_model.isDir(index):
             pass
         else:

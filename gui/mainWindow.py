@@ -53,3 +53,4 @@ class Ui_mainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         mainWindow.setWindowTitle(_translate("mainWindow", "Animal detector"))
         self.run_button.setText(_translate("mainWindow", "Check"))
+
